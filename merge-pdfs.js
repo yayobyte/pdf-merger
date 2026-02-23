@@ -11,7 +11,11 @@ async function mergePdfs() {
     }
 
     const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-    const { files, output } = config;
+    const { files, output: configOutput } = config;
+
+    // Check for output file as a command-line parameter
+    const cliOutput = process.argv[2];
+    const finalOutputName = cliOutput || configOutput || 'Merged_Output.pdf';
 
     if (!files || !Array.isArray(files) || files.length === 0) {
       console.error('Error: No files specified in config');
@@ -56,7 +60,10 @@ async function mergePdfs() {
       }
     }
 
-    const outputPath = path.join(__dirname, output || 'Merged_Output.pdf');
+    const outputPath = path.isAbsolute(finalOutputName)
+      ? finalOutputName
+      : path.join(__dirname, finalOutputName);
+
     const mergedPdfBytes = await mergedPdf.save();
     fs.writeFileSync(outputPath, mergedPdfBytes);
 

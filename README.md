@@ -16,11 +16,11 @@ A Node.js tool to merge PDF documents and images into a single PDF file, specifi
 2. Update the `files` array in `files-to-merge.json` with your filenames in the desired order.
 3. Run the merge script:
 ```bash
-node merge-pdfs.js
+node merge-pdfs.js [optional_output_filename.pdf]
 ```
 
 ## Configuration
-The `files-to-merge.json` file controls which files are merged and the name of the output file.
+The `files-to-merge.json` file controls which files are merged. The output filename can be set in the `output` field of the JSON or passed as an argument (which takes priority).
 
 ```json
 {
